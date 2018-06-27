@@ -1,0 +1,9 @@
+POST https://live.kuaishou.com/feed/profile HTTP/1.1
+content-type: application/json
+
+{
+    "count": 24,
+    "pcursor": "1.52420347365E12",
+    "principalId": "yangsubaobe"
+}
+

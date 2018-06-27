@@ -1,0 +1,11 @@
+{
+  "host": "https://live.kuaishou.com/",
+  "apiBase": "/api/v1.0/json/",
+  "defaultPage": "3xy5mxzf9wbsjsi",
+  "defaultPcursor": "1.501168403403E12",
+  "kuaishou": {
+    "homepage": "https://live.kuaishou.com/profile/",
+    "videolist": "https://live.kuaishou.com/feed/profile",
+    "playvideo": "https://www.kuaishou.com/photo/"
+  }
+}
