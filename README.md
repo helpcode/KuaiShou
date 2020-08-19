@@ -23,8 +23,11 @@
 
 
 **1：用户主页喜欢视频列表接口**
+
 请求：POST
+
 调用方法：likedFeedsQuery()
+
 方法参数：
   - 1：principalId 用户快手id（用户自定义的用户名）
   - 2：pcursor     当前的页码（类似分页的page参数），如果留空，默认第一页
@@ -51,8 +54,11 @@ query {
 ```
 
 **2：获取视频的评论**
+
 请求：POST
+
 调用方法：commentListQuery()
+
 方法参数：
   - 1：count 评论数
   - 2：page  无用参数，但是必填默认1即可
@@ -76,8 +82,11 @@ query {
 ```
 
 **3：获取热门推荐视频**
+
 请求：POST
+
 调用方法：videoRecommendFeeds()
+
 方法参数：
   - 1：count   展示多少条
   - 2：photoId 视频的id参数
@@ -104,8 +113,11 @@ query {
 ```
 
 **4：获取视频的真实MP4播放地址**
+
 请求：POST
+
 调用方法：feedById()
+
 方法参数：
   - 1：principalId 主播的快手id，从 likedFeeds 方法 list.user.id 获得
   - 2：photoId     视频的id参数，从 likedFeeds 方法 list.id 中获得
@@ -122,8 +134,11 @@ query {
 ```
 
 **5：获取主播首页的视频**
+
 请求：POST
+
 调用方法：publicFeeds()
+
 方法参数：
 
   - 1：principalId 主播的快手id
@@ -153,8 +168,11 @@ query {
 
 
 **6：获取视频回复的展开更多**
+
 请求：POST
+
 调用方法：subCommentList()
+
 方法参数：
 
   - 1：photoId       视频id
@@ -178,8 +196,11 @@ query {
 ```
 
 **7：对视频进行 喜欢收藏**
+
 请求：POST
+
 调用方法：likeVideo()
+
 方法参数：
 
   - 1：photoId       视频id
