@@ -227,7 +227,7 @@ https://live.kuaishou.com/rest/wd/live/liveStream/myfollow
 
 
 
-# 接口
+# 接口（已经失效了，不要使用！！！！）
 
 ---
 
