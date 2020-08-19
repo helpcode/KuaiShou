@@ -1,3 +1,189 @@
+## 注意！！注意！！注意！！注意！！
+
+这个项目的代码已经失效，因为快手的接口采用GraphQL重写了！！
+
+如果确实需要快手接口的数据，可以从快手pc端爬数据，本人这里已经整理出很多自己用的接口了！！
+
+## 最新快手接口文档
+
+快手接口整理
+
+接口地址：https://live.kuaishou.com/m_graphql
+
+注意：
+  1：下面接口调用时，请先在PC端登录快手然后复制请求头中的cookies，然后使用后端伪造请求头来调用快手接口，后端拿到数据后
+     将数据返回给我们自己的前端。
+  2：项目中只有这一个接口地址，通过调用接口中不同方法来获取不同数据
+  3：后端需要使用专门的 graphql 插件去发送请求
+
+
+1：用户主页喜欢视频列表接口
+请求：POST
+调用方法：likedFeedsQuery()
+方法参数：
+  1：principalId 用户快手id（用户自定义的用户名）
+  2：pcursor     当前的页码（类似分页的page参数），如果留空，默认第一页
+  3：count       一页展示多少条数据（类似分页的limit参数），默认24
+
+调用实例：
+query {
+    likedFeeds(principalId: "geekhelp", pcursor: "1.582321864999E12", count: 24) {
+        pcursor
+        list {
+            id,thumbnailUrl,poster,workType,type,useVideoPlayer,imgUrls,imgSizes,magicFace,
+            musicName,caption,location,liked,onlyFollowerCanComment,relativeHeight,timestamp,width,height,
+            counts {
+                displayView,displayLike,displayComment
+            },
+            user {
+                id,eid,name,avatar,
+            },
+            expTag
+        }
+    }
+}
+
+2：获取视频的评论
+请求：POST
+调用方法：commentListQuery()
+方法参数：
+  1：count 评论数
+  2：page  无用参数，但是必填默认1即可
+  3：pcursor 分页的页面，每次请求都会返回下次页码
+  4：photoId 要获取视频评论的id
+
+query {
+   shortVideoCommentList(photoId: '', page: 1,  pcursor: '', count: 20t) {
+     commentCount,realCommentCount,pcursor,
+     commentList {
+       commentId,authorId,authorName,content,headurl,timestamp,authorEid,status,
+       subCommentCount,subCommentsPcursor,likedCount,liked,
+       subComments {
+           commentId,authorId,authorName,content,headurl,timestamp,authorEid
+           status,replyToUserName,replyTo,replyToEid
+       }
+     }
+   }
+}
+
+3：获取热门推荐视频
+请求：POST
+调用方法：videoRecommendFeeds()
+方法参数：
+  1：count   展示多少条
+  2：photoId 视频的id参数
+
+调用实例：
+
+query {
+  videoRecommendFeeds(photoId: $photoId, count: $count) {
+    list {
+      user {
+        id,avatar,name
+      },
+      id,thumbnailUrl,poster,workType,type,useVideoPlayer,imgUrls,
+      imgSizes,magicFace,musicName,caption,location,liked,onlyFollowerCanComment,
+      relativeHeight,timestamp,width,height,
+      counts {
+        displayView,displayLike,displayComment
+      },
+      expTag
+    }
+  }
+}
+
+4：获取视频的真实MP4播放地址
+请求：POST
+调用方法：feedById()
+方法参数：
+  1：principalId 主播的快手id，从 likedFeeds 方法 list.user.id 获得
+  2：photoId     视频的id参数，从 likedFeeds 方法 list.id 中获得
+
+调用实例：
+query {
+  feedById(principalId: "xxx", photoId: "xxxx") {
+          currentWork {
+              playUrl,poster
+          }
+      }
+}
+
+5：获取主播首页的视频
+请求：POST
+调用方法：publicFeeds()
+方法参数：
+
+  1：principalId 主播的快手id
+  2：pcursor     分页页码
+  3：count       一页展示多少数据
+
+调用实例：
+query {
+   publicFeeds(principalId: "xxxx", pcursor: "xxxx", count: 24) {
+       pcursor,
+        list {
+            id,thumbnailUrl,poster,workType,type,useVideoPlayer,imgUrls,imgSizes,magicFace,musicName,
+            caption,location,liked,onlyFollowerCanComment,relativeHeight,timestamp,width,height,
+            counts {
+                displayView,displayLike,displayComment
+            },
+            user {
+                id,eid,name,avatar,cityName
+            },
+            expTag
+        }
+   }
+}
+
+
+6：获取视频回复的展开更多
+请求：POST
+调用方法：subCommentList()
+方法参数：
+
+  1：photoId       视频id
+  2：rootCommentId 回复的顶级评论
+  3：pcursor       下标
+  4：count         数量
+
+调用实例：
+ query {
+  subCommentList(photoId: $photoId, rootCommentId: $rootCommentId, pcursor: $pcursor, count: $count) {
+    pcursor
+    subCommentsList {
+      commentId,authorId,authorName,content
+      headurl,timestamp,authorEid,status,replyToUserName,replyTo,
+      replyToEid
+    }
+  }
+}
+
+7：对视频进行 喜欢收藏
+请求：POST
+调用方法：likeVideo()
+方法参数：
+
+  1：photoId       视频id
+  2：principalId   快手用户id
+  3：cancel        0 喜欢，1 取消喜欢
+query {
+  likeVideo(photoId: $photoId, principalId: $principalId, cancel: $cancel) {
+    result
+  }
+}
+
+
+7：获取自己关注的主播，有哪些正在进行直播
+
+请求：GET
+https://live.kuaishou.com/rest/wd/live/liveStream/myfollow
+
+
+
+----
+
+
+
 # 接口
 
 ---
