@@ -4,6 +4,10 @@
 
 如果确实需要快手接口的数据，可以从快手pc端爬数据，本人这里已经整理出很多自己用的接口了！！
 
+**下面这些接口需要你自己实现后端去调用，然后把数据返回给自己的前端即可。如果你只想用现成的，可以使用我写好的接口**
+
+**项目目前还没部署，有需要的可以找我要！！**
+
 ## 最新快手接口文档
 
 快手接口整理
@@ -18,7 +22,7 @@
   - 3：后端需要使用专门的 graphql 插件去发送请求
 
 
-1：用户主页喜欢视频列表接口
+**1：用户主页喜欢视频列表接口**
 请求：POST
 调用方法：likedFeedsQuery()
 方法参数：
@@ -46,15 +50,16 @@ query {
 }
 ```
 
-2：获取视频的评论
+**2：获取视频的评论**
 请求：POST
 调用方法：commentListQuery()
 方法参数：
-  1：count 评论数
-  2：page  无用参数，但是必填默认1即可
-  3：pcursor 分页的页面，每次请求都会返回下次页码
-  4：photoId 要获取视频评论的id
-
+  - 1：count 评论数
+  - 2：page  无用参数，但是必填默认1即可
+  - 3：pcursor 分页的页面，每次请求都会返回下次页码
+  - 4：photoId 要获取视频评论的id
+  
+```js
 query {
    shortVideoCommentList(photoId: '', page: 1,  pcursor: '', count: 20t) {
      commentCount,realCommentCount,pcursor,
@@ -68,16 +73,18 @@ query {
      }
    }
 }
+```
 
-3：获取热门推荐视频
+**3：获取热门推荐视频**
 请求：POST
 调用方法：videoRecommendFeeds()
 方法参数：
-  1：count   展示多少条
-  2：photoId 视频的id参数
+  - 1：count   展示多少条
+  - 2：photoId 视频的id参数
 
 调用实例：
 
+```js
 query {
   videoRecommendFeeds(photoId: $photoId, count: $count) {
     list {
@@ -94,15 +101,17 @@ query {
     }
   }
 }
+```
 
-4：获取视频的真实MP4播放地址
+**4：获取视频的真实MP4播放地址**
 请求：POST
 调用方法：feedById()
 方法参数：
-  1：principalId 主播的快手id，从 likedFeeds 方法 list.user.id 获得
-  2：photoId     视频的id参数，从 likedFeeds 方法 list.id 中获得
+  - 1：principalId 主播的快手id，从 likedFeeds 方法 list.user.id 获得
+  - 2：photoId     视频的id参数，从 likedFeeds 方法 list.id 中获得
 
 调用实例：
+```js
 query {
   feedById(principalId: "xxx", photoId: "xxxx") {
           currentWork {
@@ -110,17 +119,20 @@ query {
           }
       }
 }
+```
 
-5：获取主播首页的视频
+**5：获取主播首页的视频**
 请求：POST
 调用方法：publicFeeds()
 方法参数：
 
-  1：principalId 主播的快手id
-  2：pcursor     分页页码
-  3：count       一页展示多少数据
+  - 1：principalId 主播的快手id
+  - 2：pcursor     分页页码
+  - 3：count       一页展示多少数据
 
 调用实例：
+
+```js
 query {
    publicFeeds(principalId: "xxxx", pcursor: "xxxx", count: 24) {
        pcursor,
@@ -137,19 +149,22 @@ query {
         }
    }
 }
+```
 
 
-6：获取视频回复的展开更多
+**6：获取视频回复的展开更多**
 请求：POST
 调用方法：subCommentList()
 方法参数：
 
-  1：photoId       视频id
-  2：rootCommentId 回复的顶级评论
-  3：pcursor       下标
-  4：count         数量
+  - 1：photoId       视频id
+  - 2：rootCommentId 回复的顶级评论
+  - 3：pcursor       下标
+  - 4：count         数量
 
 调用实例：
+
+```js
  query {
   subCommentList(photoId: $photoId, rootCommentId: $rootCommentId, pcursor: $pcursor, count: $count) {
     pcursor
@@ -160,25 +175,29 @@ query {
     }
   }
 }
+```
 
-7：对视频进行 喜欢收藏
+**7：对视频进行 喜欢收藏**
 请求：POST
 调用方法：likeVideo()
 方法参数：
 
-  1：photoId       视频id
-  2：principalId   快手用户id
-  3：cancel        0 喜欢，1 取消喜欢
+  - 1：photoId       视频id
+  - 2：principalId   快手用户id
+  - 3：cancel        0 喜欢，1 取消喜欢
+  
+```js  
 query {
   likeVideo(photoId: $photoId, principalId: $principalId, cancel: $cancel) {
     result
   }
 }
+```
 
-
-7：获取自己关注的主播，有哪些正在进行直播
+**7：获取自己关注的主播，有哪些正在进行直播**
 
 请求：GET
+
 https://live.kuaishou.com/rest/wd/live/liveStream/myfollow
 
 
